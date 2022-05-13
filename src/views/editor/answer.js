@@ -12,10 +12,11 @@ const radioEdit = (questionIndex, answerIndex, value, checked) => html`
 </div>`;
 
 
-export function createAnswerListForOneQuestion(answers, questionIndex, correctIndex) {
-    const currentAnswersData = answers.slice();
+export function createAnswerListForOneQuestion(data, questionIndex) {
+    const answers = data.answers;
     const element = document.createElement('div');
     element.addEventListener('click', onDelete);
+    element.addEventListener('change', onChange);
 
     update();
 
@@ -23,7 +24,7 @@ export function createAnswerListForOneQuestion(answers, questionIndex, correctIn
 
     function update() {
         render(html`
-        ${currentAnswersData.map((a, answerIndex) => radioEdit(questionIndex, answerIndex, a, correctIndex == answerIndex))}
+        ${answers.map((a, answerIndex) => radioEdit(questionIndex, answerIndex, a, data.correctIndex == answerIndex))}
         <div class="editor-input">
             <button @click=${addAnswer} class="input submit action">
                 <i class="fas fa-plus-circle"></i>
@@ -32,9 +33,21 @@ export function createAnswerListForOneQuestion(answers, questionIndex, correctIn
         </div>`, element)
     }
 
+    function onChange(e) {
+        if (e.target.getAttribute('type') == 'text') {
+            const indexUpdatedEditedAnswer = Number(e.target.name.split('-')[1]);
+        answers[indexUpdatedEditedAnswer] = e.target.value || '';
+        } else {
+            data.correctIndex = Number(e.target.value);
+        }
+
+        
+        // console.log(indexUpdatedEditedAnswer);
+    }
+
     function addAnswer(e) {
         e.preventDefault();
-        currentAnswersData.push('');//добавя един елемент празен символ повече към масива = един radioEdit повече
+        answers.push('');//добавя един елемент празен символ повече към масива = един radioEdit повече
         update();
     }
 
@@ -47,7 +60,7 @@ export function createAnswerListForOneQuestion(answers, questionIndex, correctIn
         const radioEditToDeleteWithIndex = target.dataset.index;
         if (radioEditToDeleteWithIndex != undefined) {
             e.preventDefault();
-            currentAnswersData.splice(radioEditToDeleteWithIndex, 1);
+            answers.splice(radioEditToDeleteWithIndex, 1);
             update();
         }
     }

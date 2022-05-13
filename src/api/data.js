@@ -39,7 +39,7 @@ export async function createQuiz(quiz) {
 }
 
 export async function getQuizes() {
-    return await api.get(host + '/classes/Quiz');
+    return (await api.get(host + '/classes/Quiz')).results;
 }
 
 export async function getQuizById(id) {
@@ -62,8 +62,12 @@ export async function createQuestion(quizId, question) {
     return await api.post(host + '/classes/Question', body);
 }
 
-export async function getQuestionsByQuizId(quizId) {
-    const query = JSON.stringify({ quiz: createPointer('Quiz', quizId) });
+//If somebody put not authprozed questions to not personal quiz, then we will not dispkay these questions
+export async function getQuestionsByQuizId(quizId, ownerId) {
+    const query = JSON.stringify({
+        quiz: createPointer('Quiz', quizId),
+        owner: createPointer('_User', ownerId)
+    });
     const response = await api.get(host + '/classes/Question?where=' + encodeURIComponent(query));
     return response.results;
 }

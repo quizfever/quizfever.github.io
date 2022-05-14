@@ -8,6 +8,9 @@ import {browsePage} from './views/browse.js';
 import {loginPage, registerPage} from './views/authorization.js';
 import { getUserData } from './util.js';
 import { logout } from './api/data.js';
+import { quizPage } from './views/quiz/quiz.js';
+
+// window.submitSolution = submitSolution;
 
 const root = document.getElementById('content');
 document.getElementById('logoutBtn').addEventListener('click', onLogout);
@@ -18,6 +21,7 @@ page('/edit/:id', editorPage);
 page('/browse', browsePage);
 page('/login', loginPage);
 page('/register', registerPage);
+page('/quiz/:id', quizPage)
 
 updateUserNav();
 page.start();

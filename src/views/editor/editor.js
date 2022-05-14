@@ -1,6 +1,7 @@
 import { html, render, topics } from '../../lib.js';
 import { createList } from './listQuestions.js';
 import { createQuiz, getQuizById, updateQuiz, getQuestionsByQuizId } from '../../api/data.js';
+import { getUserData } from '../../util.js';
 
 
 const template = (quiz, quizEditor, updateCount) => html`
@@ -21,24 +22,31 @@ const quizEditorTemplate = (quiz, onSave, working) => html`
 <form @submit=${onSave}>
     <label class="editor-label layout">
         <span class="label-col">Title:</span>
-        <input class="input i-med" type="text" name="title" .value=${quiz ? quiz.title : '' } ?disabled=${working}>
+        <input class="input i-med" type="text" name="title" .value=${quiz ? quiz.title : ''} ?disabled=${working}>
     </label>
     <label class="editor-label layout">
         <span class="label-col">Topic:</span>
-        <select class="input i-med" name="topic" .value=${quiz ? quiz.topic : '0' } ?disabled=${working}>
+        <select class="input i-med" name="topic" .value=${quiz ? quiz.topic : '0'} ?disabled=${working}>
             <option value="0">-- Select category</option>
-            ${Object.entries(topics).map(([k, v]) => html`<option value=${k} >${v}</option>`)}
-            <!-- ?selected=${quiz.topic == k} -->
-        </select>
-    </label>
+            ${ !quiz ?
+                Object.entries(topics).map(([k, v]) => html`<option value=${k}>${v}</option>`)
+                :
+                Object.entries(topics).map(([k, v]) => html`<option value=${k} ?selected=${quiz.topic==k}>${v}</option>`)
+            }
+            <!-- -->
+        </select >
+    </label >
     <label class="editor-label layout">
         <span class="label-col">Description:</span>
         <textarea class="input" name="description" .value=${quiz ? quiz.description : ''}
-            ?disabled=${working}></textarea>
-    </label>
+        ?disabled=${working}></textarea>
+    </label >
     <input class="input submit action" type="submit" value="Save">
-</form>
-${working ? html`<div class="loading-overlay working"></div>` : ''}`;
+    </form>
+${ working ? html`<div class="loading-overlay working"></div>` : '' } `;
+
+// <!-- ?selected=${quiz.topic == k} -->
+
 
 /*
 const questions = [
@@ -77,6 +85,7 @@ function createQuizEditor(quiz, onSave) {
     }
 }
 
+
 export async function editorPage(ctx) {
     const quizId = ctx.params.id;
     let quiz = null;
@@ -84,7 +93,7 @@ export async function editorPage(ctx) {
     if (quizId) {
         [quiz, questions] = await Promise.all([
             await getQuizById(quizId),
-            await getQuestionsByQuizId(quizId, sessionStorage.getItem('userId'))
+            await getQuestionsByQuizId(quizId, getUserData().userId)
         ]);
         quiz.questions = questions;
     }
@@ -117,6 +126,7 @@ export async function editorPage(ctx) {
 
             if (quizId) {
                 await updateQuiz(quizId, dataQuiz);
+                ctx.page.redirect('/browse');
             } else {
                 const result = await createQuiz(dataQuiz);
                 ctx.page.redirect('/edit/' + result.objectId);

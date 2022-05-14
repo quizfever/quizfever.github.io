@@ -9,7 +9,8 @@ const topics = {
     hardware: 'Hardware',
     software: 'Software',
     frameworks: 'Frameworks',
-    cooking: 'Cooking'
+    cooking: 'Cooking',
+    math: "Math"
 }
 
 export {

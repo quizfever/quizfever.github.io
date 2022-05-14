@@ -28,7 +28,7 @@ async function loadQuizes() {
 
     return html`
     <div class="pad-large alt-page">
-        ${quizes.map(quizTemplate)}
+        ${quizes.map(qz => quizTemplate(qz))}
     </div>`;
 }
 

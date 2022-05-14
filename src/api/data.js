@@ -39,7 +39,10 @@ export async function createQuiz(quiz) {
 }
 
 export async function getQuizes() {
-    return (await api.get(host + '/classes/Quiz')).results;
+    const quizes = (await api.get(host + '/classes/Quiz')).results;
+    const taken = await getSolutionCount(quizes.map(q => q.objectId));
+    quizes.forEach(q => q.taken = taken[q.objectId]);
+    return quizes;
 }
 
 export async function getQuizById(id) {

@@ -11,7 +11,7 @@ export const quizTemplate = (quiz) => html`
         <div class="quiz-meta">
             <span>${quiz.questionCount} question${quiz.questionCount == 1 ? '' : 's'}</span>
             <span>|</span>
-            <span>Taken ${quiz.taken} time${quiz.taken == 1 ? '' : 's'}</span>
+            <span>Taken ${quiz.taken ? quiz.taken : 0} time${quiz.taken == 1 ? '' : 's'}</span>
         </div>
     </div>
 </article>`;

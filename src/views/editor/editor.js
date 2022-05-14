@@ -41,7 +41,7 @@ const quizEditorTemplate = (quiz, onSave, working) => html`
         <textarea class="input" name="description" .value=${quiz ? quiz.description : ''}
         ?disabled=${working}></textarea>
     </label >
-    <input class="input submit action" type="submit" value="Save">
+    <input class="input submit action" type="submit" value=${quiz ? 'Save' : 'Create'}>
     </form>
 ${ working ? html`<div class="loading-overlay working"></div>` : '' } `;
 
@@ -106,7 +106,6 @@ export async function editorPage(ctx) {
         const count = questions.length + change;
         await updateQuiz(quizId, { questionCount: count });
     }
-
 
     async function onSave(event) {
         event.preventDefault();

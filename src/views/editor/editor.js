@@ -27,7 +27,8 @@ const quizEditorTemplate = (quiz, onSave, working) => html`
         <span class="label-col">Topic:</span>
         <select class="input i-med" name="topic" .value=${quiz ? quiz.topic : '0' } ?disabled=${working}>
             <option value="0">-- Select category</option>
-            ${Object.entries(topics).map(([k, v]) => html`<option value=${k} ?selected=${quiz.topic == k}>${v}</option>`)}
+            ${Object.entries(topics).map(([k, v]) => html`<option value=${k} >${v}</option>`)}
+            <!-- ?selected=${quiz.topic == k} -->
         </select>
     </label>
     <label class="editor-label layout">

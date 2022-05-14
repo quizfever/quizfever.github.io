@@ -1,15 +1,15 @@
-import {html, until} from '../../lib.js';
-import {getQuizById, getQuestionsByQuizId} from '../../api/data.js';
+import { submitSolution } from '../../api/data.js';
+import {html, styleMap, classMap} from '../../lib.js';
 import { cube } from '../common/loader.js';
 
-const quizTemplate = (quiz, questions, currentQuestionIndex) => html`
+const quizTemplate = (quiz, questions, answers, currentQuestionIndex, onSelect, resetQuiz, onSubmit) => html`
 <section id="quiz">
     <header class="pad-large">
         <h1>${quiz.title}: Question ${currentQuestionIndex + 1} / ${questions.length}</h1>
         <nav class="layout q-control">
             <span class="block">Question index</span>
             ${questions.map((q, i) => 
-                html`<a class="q-index q-current q-answered" href="/quiz/${quiz.objectId}?question=${i+1}"></a>`)} 
+                indexTemplate(quiz.objectId, i, i == currentQuestionIndex, answers[i] != undefined))} 
         </nav>
     </header>
     <div class="pad-large alt-page">
@@ -19,17 +19,36 @@ const quizTemplate = (quiz, questions, currentQuestionIndex) => html`
                 ${questions[currentQuestionIndex].text}
             </p>
 
-            <form>
+            <form id="quiz-form" @change=${onSelect}>
                 ${questions.map((q, i) => questionTemplate(q, i, i == currentQuestionIndex))}
             </form>
 
             <nav class="q-control">
-                <span class="block">12 questions remaining</span>
-                <a class="action" href=#><i class="fas fa-arrow-left"></i> Previous</a>
-                <a class="action" href=#><i class="fas fa-sync-alt"></i> Start over</a>
+                <span class="block">${answers.filter(a => a == undefined).length} questions reamaining to be answered</span>
+                ${currentQuestionIndex > 0 
+                    ? html`
+                        <a class="action" href="/quiz/${quiz.objectId}?question=${currentQuestionIndex}">
+                            <i class="fas fa-arrow-left"></i>
+                            Previous
+                        </a>`
+                    : ''}
+
+
+                <a @click=${resetQuiz} class="action" href="javascript:void(0)"><i class="fas fa-sync-alt"></i> Start over</a>
+
                 <div class="right-col">
-                    <a class="action" href=#>Next <i class="fas fa-arrow-right"></i></a>
-                    <a class="action" href=#>Submit answers</a>
+                ${currentQuestionIndex < questions.length-1
+                    ? html`
+                        <a class="action" href="/quiz/${quiz.objectId}?question=${currentQuestionIndex + 2}">
+                            Next 
+                            <i class="fas fa-arrow-right"></i>
+                        </a>`
+                    : ''}
+
+                    ${(answers.filter(a => a == undefined).length == 0 || currentQuestionIndex == questions.length-1)
+                        ? html`<a @click=${onSubmit} class="action" href="javascript:void(0)">Submit answers</a>`
+                        : ''}                    
+
                 </div>
             </nav>
         </article>
@@ -37,8 +56,17 @@ const quizTemplate = (quiz, questions, currentQuestionIndex) => html`
     </div>
 </section>`;
 
+const indexTemplate = (quizId, i, isCurrent, isAnswered) => {
+    const className = {
+        'q-index': true, //this class will be present in the attributes of the tag <a>
+        'q-current': isCurrent,
+        'q-answered': isAnswered
+    };
+    return html`<a class=${classMap(className)} href="/quiz/${quizId}?question=${i+1}"></a>`;
+};
+
 const questionTemplate = (question, questionIndex, isCurrent) => html`
-<div data-index="question-${questionIndex}" style=${isCurrent ? '' : 'display:none'}>
+<div data-index="question-${questionIndex}" style=${styleMap({display: isCurrent ? '' : 'none'})}>
     ${question.answers.map((answ, indexAnswers) => answerTemplate(questionIndex, indexAnswers, answ))}
 </div>`;
 
@@ -51,14 +79,65 @@ const answerTemplate = (questionIndex, indexAnswers, text) => html`
 
 export async function quizPage(ctx) {
     const index = Number(ctx.querystring.split('=')[1] || 1) - 1; //if not querystring, we accept the question is the first
-    const quizId = ctx.params.id;
-    ctx.renderProp(until(getQuiz(quizId, index), cube()))
-}
+    const questions = ctx.quiz.questions;
+    const answers = ctx.quiz.answers;
+    update();
 
-async function getQuiz(quizId, index) {
-    const quiz = await getQuizById(quizId);
-    const ownerId = quiz.owner.objectId;
-    const questions = await getQuestionsByQuizId(quizId, ownerId);
+    function onSelect(e) {
+        const questionIndex = Number(e.target.name.split("-")[1]);
+        if (Number.isNaN(questionIndex) != true) {
+            const answerInd = Number(e.target.value);
+            answers[questionIndex] = answerInd;
+            update();
+        }        
+    }
 
-    return quizTemplate(quiz, questions, index); //we start with current question index 0
+    function resetQuiz() {
+        const confirmed = confirm('Are you sure you want to reset your answers?');
+        if (confirmed) {
+            ctx.clearCache(ctx.quiz.objectId);
+            ctx.page.redirect('/quiz/' + ctx.quiz.objectId);
+        }
+    }
+
+    async function onSubmit(e) {
+        // console.log(answers); //the current answers of the quiz filled in by the current user
+        const unanswered = answers.filter(a => a == undefined).length;
+        if (unanswered > 0) {
+            const confirmed = confirm(`There are ${unanswered} unanswered questions. Are you sure you will not answer them?`);
+            if (confirmed == false) {
+                return; //we stop the submission of the test
+            }
+        }
+
+        //TODO:
+        /* An option to keep the right an the wrong answers 
+        const result = [];
+        for (let i = 0; i < questions.length; i++) {
+            result.push({
+                question: questions[i].text,
+                correct: questions[i].correctIndex == answers[i]}); //each question its correct answer is it equal 
+            // to the current results/answers based on the filled in quiz by the user           
+        }*/
+
+        let correctAnswers = 0;
+        for (let i = 0; i < questions.length; i++) {
+            if (questions[i].correctIndex == answers[i]) {//each question its correct answer is it equal to the current results/answers based on the filled in quiz by the user?
+                correctAnswers++;
+            }         
+        }
+
+        const solution = {
+            correctAnswers,
+            totalQuestions: questions.length
+        };
+
+        ctx.renderProp(cube());
+        await submitSolution(ctx.quiz.objectId, solution);
+        ctx.page.redirect('/summary/' + ctx.quiz.objectId);
+    }
+
+    function update() {
+        ctx.renderProp(quizTemplate(ctx.quiz, questions, answers, index, onSelect, resetQuiz, onSubmit));
+    }
 }

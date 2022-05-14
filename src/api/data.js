@@ -62,7 +62,7 @@ export async function createQuestion(quizId, question) {
     return await api.post(host + '/classes/Question', body);
 }
 
-//If somebody put not authprozed questions to not personal quiz, then we will not dispkay these questions
+//If somebody put not authorozed questions to not personal quiz, then we will not display these questions
 export async function getQuestionsByQuizId(quizId, ownerId) {
     const query = JSON.stringify({
         quiz: createPointer('Quiz', quizId),

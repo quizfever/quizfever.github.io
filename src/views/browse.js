@@ -34,10 +34,10 @@ async function loadQuizes() {
 const quizTemplate = (quiz) => html`
 <article class="preview layout">
     <div class="right-col">
-        <a class="action cta" href=${'/details/' + quiz.objectId}>View Quiz</a>
+        <a class="action cta" href=${'/quiz/' + quiz.objectId}>View Quiz</a>
     </div>
     <div class="left-col">
-        <h3><a class="quiz-title-link" href=${'/details/' + quiz.objectId}>${quiz.title}</a></h3>
+        <h3><a class="quiz-title-link" href=${'/quiz/' + quiz.objectId}>${quiz.title}</a></h3>
         <span class="quiz-topic">Topic: ${quiz.topic}</span>
         <div class="quiz-meta">
             <span>${quiz.questionCount} question${quiz.questionCount == 1 ? '' : 's'}</span>

@@ -6,9 +6,6 @@ import {classMap} from 'https://unpkg.com/lit-html/directives/class-map?module';
 import {styleMap} from 'https://unpkg.com/lit-html/directives/style-map?module';
 
 
-
-
-
 const topics = {
     it: 'IT',
     languages: 'Languages',

@@ -1,6 +1,6 @@
 import { html } from '../../lib.js';
 
-const resultTemplate = (quiz, result) => html`
+const resultTemplate = (quiz, result, onRestartQuiz) => html`
 <section id="summary">
     <div class="hero layout">
         <article class="details glass">
@@ -15,12 +15,13 @@ const resultTemplate = (quiz, result) => html`
             ${result.correctAnswers}/${result.totalQuestions} correct answers
             </div>
 
-            <a class="action cta" href="#"><i class="fas fa-sync-alt"></i> Retake Quiz</a>
-            <a class="action cta" href="#"><i class="fas fa-clipboard-list"></i> See Details</a>
+            <a @click=${onRestartQuiz} class="action cta" href="javascript:void(0)"><i class="fas fa-sync-alt"></i> Retake Quiz</a>
+            <a class="action cta" href="/under-construction"><i class="fas fa-clipboard-list"></i> See Details</a>
 
         </article>
     </div>
 
+    <!--
     <div class="pad-large alt-page">
         <article class="preview">
             <span class="s-correct">
@@ -86,7 +87,7 @@ const resultTemplate = (quiz, result) => html`
                     </span>
                 </div>
         </article>
-    </div>
+    </div> -->
 
 </section>`;
 
@@ -99,5 +100,17 @@ export async function resultPage(ctx) {
         percent: (correctAnswers / questions.length * 100).toFixed(0),
         correctAnswers,
         totalQuestions: questions.length
-    }));
+    },
+    onRestartQuiz));
+
+    function onRestartQuiz() {
+        const confirmed = confirm('Are you sure you want to make the Quiz again?');
+        if (confirmed) {
+            ctx.clearCache(ctx.quiz.objectId);
+            ctx.page.redirect('/quiz/' + ctx.quiz.objectId);
+        }
+    }
 }
+
+
+

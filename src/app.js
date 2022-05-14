@@ -11,7 +11,9 @@ import { getQuestionsByQuizId, getQuizById, logout } from './api/data.js';
 import { quizPage } from './views/quiz/quiz.js';
 import {cube} from './views/common/loader.js';
 import {resultPage} from './views/quiz/result.js';
-
+import { homePage } from './views/home.js';
+import { detailsPage } from './views/quiz/details.js';
+import { underConstructionPage } from './views/underConstruction.js';
 
 
 const cache = {};
@@ -19,6 +21,7 @@ const root = document.getElementById('content');
 document.getElementById('logoutBtn').addEventListener('click', onLogout);
 
 page(decorateContext);
+page('/', homePage);
 page('/create', editorPage);
 page('/edit/:id', editorPage);
 page('/browse', browsePage);
@@ -26,6 +29,8 @@ page('/login', loginPage);
 page('/register', registerPage);
 page('/quiz/:id', getQuiz, quizPage);
 page('/summary/:id', getQuiz, resultPage);
+page('/details/:id', getQuiz, detailsPage);
+page('/under-construction', underConstructionPage);
 
 updateUserNav();
 page.start();
@@ -43,7 +48,6 @@ async function getQuiz(ctx, next) {
         const ownerId = cache[quizId].owner.objectId;
         cache[quizId].questions = await getQuestionsByQuizId(quizId, ownerId);
         cache[quizId].answers = cache[quizId].questions.map(q => undefined); //all questions in the beginnig are not answered
-
     }
 
     ctx.quiz = cache[quizId];//new property quiz

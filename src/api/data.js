@@ -21,7 +21,7 @@ function createPointer(name, id) {
 function addOwner(object) {
     const userData = getUserData();
     if (!userData) {
-        return alert('Please, log in with a user to create Quiz or Question to a Quiz');
+        return alert('Please, log in with a user to create or edit a Quiz');
     }
 
     const userId = userData.userId;

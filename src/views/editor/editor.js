@@ -87,6 +87,9 @@ function createQuizEditor(quiz, onSave) {
 
 
 export async function editorPage(ctx) {
+    if (!getUserData()) {
+        return alert('Please, log in with a user to create or edit a Quiz');
+    }
     const quizId = ctx.params.id;
     let quiz = null;
     let questions = [];

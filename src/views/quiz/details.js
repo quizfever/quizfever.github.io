@@ -2,6 +2,7 @@ import { html, topics, until } from '../../lib.js';
 
 import { getSolutionCount } from '../../api/data.js';
 import { line } from '../common/loader.js';
+import { getUserData } from '../../util.js';
 
 const detailsTemplate = (quiz) => html`
 <section id="details">
@@ -13,12 +14,32 @@ const detailsTemplate = (quiz) => html`
             <p class="quiz-desc">${quiz.description}</p>
 
             <div>
-                <a class="cta action" href="/quiz/${quiz.objectId}">Begin Quiz</a>
+                ${beginOrEditQuiz(quiz)}
+                
             </div>
 
         </article>
     </div>
 </section>`;
+
+function beginOrEditQuiz(quiz) {
+    const userData = getUserData();
+    let resultHtml = '';
+    if (userData) {
+        resultHtml = html`
+            <a class="cta action" href="/quiz/${quiz.objectId}">Begin Quiz</a>
+
+            ${quiz.owner.objectId == userData.userId 
+                    ? html`<a class="cta action" href="/edit/${quiz.objectId}">Edit Quiz</a>`
+                    : ''}
+                `;            
+    } else {
+        resultHtml = html`<a class="cta action" href="/login">Begin Quiz after log In/Up</a>`
+        alert('You should log in/up in order to start solving a quiz!');
+    }
+    return resultHtml;
+}
+
 
 async function loadCount(quiz) {
     const taken = (await getSolutionCount([quiz.objectId]))[quiz.objectId] || 0;

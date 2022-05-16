@@ -6,7 +6,13 @@
 @import "./auth.css";
 @import "./profile.css";
 
-
+/*
 #guest-nav, #user-nav {
     display: none;
+}*/
+
+#welcomeMsg {
+    font-size: 22px;
+    color: #edb83d;
+    font-weight: bolder;    
 }

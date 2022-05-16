@@ -4,19 +4,18 @@ import { getMostRecent, getStats } from '../api/data.js';
 import { cube, line } from './common/loader.js';
 import { quizTemplate } from './common/quiz-preview.js';
 
-const homeTemplate = () => html`<section id="welcome">
-
+const homeTemplate = () => html`
+<section id="welcome">
     <div class="hero layout">
         <div class="splash right-col"><i class="fas fa-clipboard-list"></i></div>
         <div class="glass welcome">
             <h1>Welcome to Quiz Fever!</h1>
             ${until(loadStats(), line())}
-            <a class="action cta" href="/login">Sign in to create a quiz</a>
+            <a class="action cta" href="/login">Sign In/Up to create a quiz</a>
         </div>
     </div>
 
     ${until(loadRecent(), cube())}
-
 </section>`;
 
 async function loadStats() {

@@ -40,22 +40,30 @@
 
 <body>
     <div id="container">
-        <header id="titlebar">
-            <nav>
-                <a class="logotype" href="/"><i class="fas fa-question-circle"></i><i
-                        class="merge fas fa-check-circle"></i><span>Quiz Fever</span></a>
-                <div class="navigation">
-                    <a class="nav-link" href="/browse">Browse</a>
 
-                    <div id="user-nav">                        
-                        <a class="nav-link" href="/create">Create</a>
+        <header id="titlebar">       
+            <span id="welcomeMsg"></span>    
+
+            <nav>
+                <a class="logotype" href="/">
+                    <i class="fas fa-question-circle"></i>
+                    <i class="merge fas fa-check-circle"></i>
+                    <span>QuizFever</span>
+                </a>
+
+                <div class="navigation">
+                    <a class="nav-link" href="/browse">BrowseAll</a>
+
+                    <div id="user-nav">
+                        <a class="nav-link" href="/my-quizes">MyQuizes</a>
+                        <a class="nav-link" href="/create">CreateNew</a>
+                        <!--<a class="nav-link" href="/my-solutions">Solved</a>-->                        
                         <a class="nav-link profile-link" href="#"><i class="fas fa-user-circle"></i></a>
                         <a id="logoutBtn" class="nav-link" href="javascript:void(0)">Logout</a>
-                        <a id="welcomeMsg" class="nav-link" href="javascript:void(0)"> The welcome message </a>
                     </div>
 
                     <div id="guest-nav">
-                        <a class="nav-link" href="/login">Sign in</a>
+                        <a class="nav-link" href="/login">Sign In/Up</a>
                     </div>
                 </div>
             </nav>

@@ -33,7 +33,6 @@ async function loadQuizes() {
 }
 
 
-
 export async function browsePage(ctx) {
     ctx.renderProp(template());
 }

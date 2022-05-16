@@ -71,11 +71,14 @@ function updateUserNav() {
     const userData = getUserData();
 
     if (userData) {
-        document.getElementById('welcomeMsg').textContent = `Welcome, ${userData["username"]}`;
+        const welcomeMsg = document.getElementById('welcomeMsg');
+        welcomeMsg.textContent = `Welcome, ${userData["username"]}`;
+        // welcomeMsg.style.fontSize = '20';
         document.getElementById('user-nav').style.display = 'block';
         document.getElementById('guest-nav').style.display = 'none';
 
     } else {
+        const welcomeMsg = document.getElementById('welcomeMsg').textContent = '';
         document.getElementById('user-nav').style.display = 'none';
         document.getElementById('guest-nav').style.display = 'block';
     }

@@ -7,13 +7,15 @@ import {styleMap} from 'https://unpkg.com/lit-html/directives/style-map?module';
 
 
 const topics = {
-    it: 'IT',
-    languages: 'Languages',
+    languages: 'Foreign Languages',
     hardware: 'Hardware',
     software: 'Software',
     frameworks: 'Frameworks',
     cooking: 'Cooking',
-    math: "Math"
+    math: "Math",
+    leisure: "Leisure time",
+    sport: "Sport",
+    other: "Other"
 }
 
 export {

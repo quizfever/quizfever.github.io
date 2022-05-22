@@ -133,12 +133,14 @@ export function createQuestion(quizId, question, removeQuestion, updateCount, ed
         showView();
     }
 
-    function showView() {
+    function showView() {        
         //decorating function removeQuestion
         const onDelete = async (index) => {
+            debugger;
             const loader = createOverlay();
             element.appendChild(loader);
             await removeQuestion(index, question.objectId);
+            element.removeChild(loader);
         };
 
         //removeQuestion function taken from the higher level (the listQuestions.js file) 

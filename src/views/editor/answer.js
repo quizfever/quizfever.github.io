@@ -40,8 +40,7 @@ export function createAnswerListForOneQuestion(data, questionIndex) {
         } else {
             data.correctIndex = Number(e.target.value);
         }
-
-        
+       
         // console.log(indexUpdatedEditedAnswer);
     }
 

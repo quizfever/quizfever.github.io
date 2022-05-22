@@ -51,7 +51,7 @@ export function createList(quizId, questions, updateCount) {
     }
 
     async function removeQuestion(indexToRemoveQuestion, id) {
-        // console.log('deleted question', indexToRemoveQuestion);        
+        // console.log('deleted question', indexToRemoveQuestion);       
         const confirmed = confirm('Are you sure you want to delete this question?');
         if (confirmed) {
             //if question saved in the Back4Up database, then remove it off the database

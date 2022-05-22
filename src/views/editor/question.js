@@ -136,7 +136,6 @@ export function createQuestion(quizId, question, removeQuestion, updateCount, ed
     function showView() {        
         //decorating function removeQuestion
         const onDelete = async (index) => {
-            debugger;
             const loader = createOverlay();
             element.appendChild(loader);
             await removeQuestion(index, question.objectId);

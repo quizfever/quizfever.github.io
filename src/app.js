@@ -1,36 +1,55 @@
 //debuggin http requests
-// import * as api from './api/data.js';
-// window.api = api;
+import * as api from './api/data.js';
+window.api = api;
 
 import { page, render } from './lib.js';
 import { editorPage } from './views/editor/editor.js';
-import { browsePage } from './views/browse.js';
+import { browseAllQuizesPage } from './views/browse.js';
 import { loginPage, registerPage } from './views/authorization.js';
 import { getUserData } from './util.js';
 import { getQuestionsByQuizId, getQuizById, logout } from './api/data.js';
 import { quizPage } from './views/quiz/quiz.js';
-import {cube} from './views/common/loader.js';
-import {resultPage} from './views/quiz/result.js';
+import { cube } from './views/common/loader.js';
+import { resultPage } from './views/quiz/result.js';
 import { homePage } from './views/home.js';
 import { detailsPage } from './views/quiz/details.js';
 import { underConstructionPage } from './views/underConstruction.js';
+import { browseMineQuizesPage } from './views/browseMineQuizes.js';
+import { browseSearchedQuizesPage } from './views/browseSearchQuizes.js';
 
 
 const cache = {};
 const root = document.getElementById('content');
 document.getElementById('logoutBtn').addEventListener('click', onLogout);
 
+
+const onSearch = (e) => {
+    e.preventDefault();
+    let formData = new FormData(e.currentTarget);
+    const searchText = encodeURIComponent(formData.get('search-text').trim());
+
+    if (searchText) {
+        page.redirect(`/quizesSearchByTitle/${searchText}`);        
+    } else {
+        return alert('Please, enter a text to search for!');
+    }
+};
+
+document.getElementById('formSearch').addEventListener("submit", onSearch);
+
 page(decorateContext);
 page('/', homePage);
 page('/create', editorPage);
 page('/edit/:id', editorPage);
-page('/browse', browsePage);
+page('/browse', browseAllQuizesPage);
+page('/my-quizes', browseMineQuizesPage);
 page('/login', loginPage);
 page('/register', registerPage);
 page('/quiz/:id', getQuiz, quizPage);
 page('/summary/:id', getQuiz, resultPage);
 page('/details/:id', getQuiz, detailsPage);
 page('/under-construction', underConstructionPage);
+page('/quizesSearchByTitle/:searchText', browseSearchedQuizesPage);
 
 updateUserNav();
 page.start();
@@ -58,7 +77,7 @@ async function getQuiz(ctx, next) {
 function clearCache(quizId) {
     if (cache[quizId]) {
         delete cache[quizId]; //we earse the property quizId of cache 
-    }     
+    }
 }
 
 function decorateContext(ctx, next) {

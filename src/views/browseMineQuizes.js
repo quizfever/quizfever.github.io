@@ -1,9 +1,10 @@
-import { html, until} from '../lib.js';
-import { getAllQuizes } from '../api/data.js';
-import { cube } from '../views/common/loader.js';
+import { html, until } from '../lib.js';
+import { getMyQuizes } from '../api/data.js';
+import { cube } from './common/loader.js';
 import { quizTemplate } from './common/quiz-preview.js';
+import { getUserData } from '../util.js';
 
-const templateAllQuizes = () => html`
+const templateMyQuizes = (userId) => html`
 <section id="browse">
     <header class="pad-large">
         ${'' /*
@@ -16,15 +17,15 @@ const templateAllQuizes = () => html`
             <input class="input submit action" type="submit" value="Filter Quizes">
         </form>
         */}
-        <h1>All quizes</h1>
+        <h1>My quizes (I have created)</h1>
     </header>
 
-    ${until(loadQuizes(), cube())}
+    ${until(loadMyQuizes(userId), cube())}
 </section>`;
 
 
-async function loadQuizes() {
-    const quizes = await getAllQuizes();
+async function loadMyQuizes(userId) {
+    const quizes = await getMyQuizes(userId);
 
     return html`
     <div class="pad-large alt-page">
@@ -33,6 +34,9 @@ async function loadQuizes() {
 }
 
 
-export async function browseAllQuizesPage(ctx) {
-    ctx.renderProp(templateAllQuizes());
+export async function browseMineQuizesPage(ctx) {
+    const userData = getUserData();
+    if (userData) {
+        ctx.renderProp(templateMyQuizes(userData.userId));
+    }    
 }

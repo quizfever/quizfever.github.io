@@ -38,9 +38,30 @@ export async function createQuiz(quiz) {
     return await api.post(host + '/classes/Quiz', body)
 }
 
-export async function getQuizes() {
+export async function getAllQuizes() {
     const quizes = (await api.get(host + '/classes/Quiz')).results;
     const taken = await getSolutionCount(quizes.map(q => q.objectId));
+    quizes.forEach(q => q.taken = taken[q.objectId]);
+    return quizes;
+}
+
+export async function getMyQuizes(userId) {
+    const query = JSON.stringify({ owner: createPointer('_User', userId) });
+    const quizes = (await api.get(host + '/classes/Quiz?where=' + encodeURIComponent(query))).results;
+    const taken = await getSolutionCount(quizes.map(q => q.objectId));
+    quizes.forEach(q => q.taken = taken[q.objectId]);
+    return quizes;
+}
+
+export async function getQuizesByTopicTitle(quizTitleSearchText) {
+    //Backend server searching by title - problem with caseSensitive  resolved :)
+    const quizes = (await api.get(host + '/classes/Quiz?where=' + `{"title": {"$regex": "${quizTitleSearchText}", "$options":"i"}}`)).results;
+    
+    if (quizes.length == 0) {
+        return null;
+    }
+    
+    const taken = await getSolutionCount(quizes.map(quiz => quiz.objectId));
     quizes.forEach(q => q.taken = taken[q.objectId]);
     return quizes;
 }
@@ -86,14 +107,14 @@ export async function deleteQuestion(id) {
 
 //Solution Collection
 export async function getSolutionsByUserId(userId) {
-    const query = JSON.stringify({owner: createPointer('_User', userId)});
+    const query = JSON.stringify({ owner: createPointer('_User', userId) });
     const response = await api.get(host + '/classes/Solution?where=' + encodeURIComponent(query));
 
     return response.results;
 }
 
 export async function getSolutionsByQuizId(quizId) {
-    const query = JSON.stringify({owner: createPointer('_User', quizId)});
+    const query = JSON.stringify({ owner: createPointer('_User', quizId) });
     const response = await api.get(host + '/classes/Solution?where=' + encodeURIComponent(query));
 
     return response.results;

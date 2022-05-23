@@ -13,9 +13,9 @@ import { cube } from './views/common/loader.js';
 import { resultPage } from './views/quiz/result.js';
 import { homePage } from './views/home.js';
 import { detailsPage } from './views/quiz/details.js';
-import { underConstructionPage } from './views/underConstruction.js';
 import { browseMineQuizesPage } from './views/browseMineQuizes.js';
 import { browseSearchedQuizesPage } from './views/browseSearchQuizes.js';
+import { showSolutionDetailsPage } from './views/quiz/solutionDetails.js';
 
 
 const cache = {};
@@ -48,7 +48,7 @@ page('/register', registerPage);
 page('/quiz/:id', getQuiz, quizPage);
 page('/summary/:id', getQuiz, resultPage);
 page('/details/:id', getQuiz, detailsPage);
-page('/under-construction', underConstructionPage);
+page('/solution-details/:id', getQuiz, showSolutionDetailsPage);
 page('/quizesSearchByTitle/:searchText', browseSearchedQuizesPage);
 
 updateUserNav();

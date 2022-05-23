@@ -62,7 +62,8 @@ body {
     bottom: 0;
 }
 
-#user-nav, #guest-nav {
+#user-nav,
+#guest-nav {
     float: left;
 }
 
@@ -86,6 +87,7 @@ body {
     font-size: 20px;
     padding: 0;
     font-weight: bold;
+    border: groove black;
 }
 
 .nav-search-field {
@@ -94,6 +96,7 @@ body {
     text-decoration: none;
     font-size: 20px;
     padding: 0;
+    border: groove black;
 }
 
 .profile-link {
@@ -195,7 +198,7 @@ footer {
 
 .alt-page {
     background-color: #f8f5f2;
-    position: relative;    
+    position: relative;
 }
 
 .cta {

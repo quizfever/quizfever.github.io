@@ -2,7 +2,7 @@ import { submitSolution } from '../../api/data.js';
 import {html, styleMap, classMap} from '../../lib.js';
 import { cube } from '../common/loader.js';
 
-const quizTemplate = (quiz, questions, answers, currentQuestionIndex, onSelect, resetQuiz, onSubmit) => html`
+const quizTemplate = (quiz, questions, answers, currentQuestionIndex, onSelect, resetQuiz, onSubmitWithSavedData) => html`
 <section id="quiz">
     <header class="pad-large">
         <h1>${quiz.title}: Question ${currentQuestionIndex + 1} / ${questions.length}</h1>
@@ -46,7 +46,7 @@ const quizTemplate = (quiz, questions, answers, currentQuestionIndex, onSelect, 
                     : ''}
 
                     ${(answers.filter(a => a == undefined).length == 0 || currentQuestionIndex == questions.length-1)
-                        ? html`<a @click=${onSubmit} class="action" href="javascript:void(0)">Submit answers</a>`
+                        ? html`<a @click=${onSubmitWithSavedData} class="action" href="javascript:void(0)">Submit answers</a>`
                         : ''}                    
 
                 </div>
@@ -100,7 +100,7 @@ export async function quizPage(ctx) {
         }
     }
 
-    async function onSubmit(e) {
+    async function onSubmitSolutionWithSavedData(e) {
         // console.log(answers); //the current answers of the quiz filled in by the current user
         const unanswered = answers.filter(a => a == undefined).length;
         if (unanswered > 0) {
@@ -110,7 +110,7 @@ export async function quizPage(ctx) {
             }
         }
 
-        //TODO:
+        //TODO: maybe not needed
         /* An option to keep the right an the wrong answers 
         const result = [];
         for (let i = 0; i < questions.length; i++) {
@@ -138,6 +138,6 @@ export async function quizPage(ctx) {
     }
 
     function update() {
-        ctx.renderProp(quizTemplate(ctx.quiz, questions, answers, index, onSelect, resetQuiz, onSubmit));
+        ctx.renderProp(quizTemplate(ctx.quiz, questions, answers, index, onSelect, resetQuiz, onSubmitSolutionWithSavedData));
     }
 }

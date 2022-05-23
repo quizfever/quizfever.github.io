@@ -87,6 +87,6 @@ export async function registerPage(ctx) {
 
         await register(email, username, password);
         ctx.updateUserNav();
-        ctx.page.redirect('/browse');
+        ctx.page.redirect('/');
     }
 }

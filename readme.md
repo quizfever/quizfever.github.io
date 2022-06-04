@@ -22,7 +22,7 @@ A system for creating, managing and filling tests - a registration is required.
 * **Quiz BrowseAll** - list wwith all quizes
 * **Quiz Details** - additional description, test statistics, authour information and starting solving the quiz
 * **Quiz Contest Mode** - answering questions, each question has a separate view, possibility to freely navigate through the questions - from one question to another, possibility to restart solving the quiz
-* **Profile Page** - information for the most recently created quiz - for guests and logged in users
+* **Profile Page** - information for the most recently created quiz and general info about number of quizes in number of topics - for guests and logged in users
 * **Quiz editor** - integrated editor for quizes, questions and answers
 * **Quiz MyQuizes** - a list with my quizes - only for logged in users
 * **Quiz Search** - possibility to search quiz by title
@@ -102,7 +102,6 @@ A system for creating, managing and filling tests - a registration is required.
 * begin quiz without results to be saved in the db - each guest (not registered/not loggend in user) to be possible to solve any quiz and be possible to see the test result and the details (mistaken questons), and/but the result not to be saved in the database - pending
 * option to delete a quiz of an owner - by the owner - deleting quiz by the quiz auhtor - pending - not needed at this time
 * Possibility to filter quizes by topic - pending
-* **Profile Page** - information for all solved quizes - pending
 * Maintaining statistics for each registered user and quiz - pending
 *       public - solutions of a quiz - keeping the best result of quizes taken by which user
 *       private - result points of quizes a user have taken - per quiz;

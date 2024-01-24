@@ -1,14 +1,14 @@
-//вдигаме нивото на абстракция, за да имаме по-лесен достъп до някои от функциите свързани със заявки
+// We level up the abstraction so that we have an easier access to some functions connected with requests
 export function getUserData() {
     return JSON.parse(sessionStorage.getItem('userData')); 
 }
 
-//вдигаме нивото на абстракция, за да имаме по-лесен достъп до някои от функциите свързани със заявки
+// We level up the abstraction so that we have an easier access to some functions connected with requests
 export function setUserData(data) {
     sessionStorage.setItem('userData', JSON.stringify(data));
 }
 
-//вдигаме нивото на абстракция, за да имаме по-лесен достъп до някои от функциите свързани със заявки
+// We level up the abstraction so that we have an easier access to some functions connected with requests
 export function clearUserData() {
     sessionStorage.removeItem('userData');
 }

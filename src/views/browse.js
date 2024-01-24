@@ -1,6 +1,6 @@
 import { html, until} from '../lib.js';
 import { getAllQuizes } from '../api/data.js';
-import { cube } from '../views/common/loader.js';
+import { cube } from './common/loader';
 import { quizTemplate } from './common/quiz-preview.js';
 
 const templateAllQuizes = () => html`
@@ -16,7 +16,7 @@ const templateAllQuizes = () => html`
             <input class="input submit action" type="submit" value="Filter Quizes">
         </form>
         */}
-        <h1>All quizes</h1>
+        <h1>All quizzes</h1>
     </header>
 
     ${until(loadQuizes(), cube())}

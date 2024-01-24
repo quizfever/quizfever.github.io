@@ -1,4 +1,4 @@
-//debuggin http requests
+//debugging http requests
 import * as api from './api/data.js';
 window.api = api;
 
@@ -66,10 +66,10 @@ async function getQuiz(ctx, next) {
         cache[quizId] = await getQuizById(quizId);
         const ownerId = cache[quizId].owner.objectId;
         cache[quizId].questions = await getQuestionsByQuizId(quizId, ownerId);
-        cache[quizId].answers = cache[quizId].questions.map(q => undefined); //all questions in the beginnig are not answered
+        cache[quizId].answers = cache[quizId].questions.map(q => undefined); //all questions in the beginning are not answered
     }
 
-    ctx.quiz = cache[quizId];//new property quiz
+    ctx.quiz = cache[quizId]; //new property quiz
 
     next();
 }
@@ -105,6 +105,6 @@ function updateUserNav() {
 
 async function onLogout() {
     await logout();
-    updateUserNav();// в същия scope
+    updateUserNav();// within same scope
     page.redirect('/');
 }

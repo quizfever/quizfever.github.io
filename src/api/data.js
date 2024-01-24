@@ -27,7 +27,7 @@ function addOwner(object) {
     const userId = userData.userId;
     const result = Object.assign({}, object);  //creating new object
     result.owner = createPointer('_User', userId);
-    return result;  //не модифицираме това което идва отвън, а му правим копие нов обект с нова референция в паметта
+    return result;  //we do not modify what it is arriving from outside, but we make a copy (new object with new reference in the memory)
 }
 
 

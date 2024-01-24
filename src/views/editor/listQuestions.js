@@ -45,7 +45,7 @@ export function createList(quizId, questions, updateCount) {
         update();
     }
 
-    //prerending by giving a new correct/updated index to each of the questions
+    //pre-rending by giving a new correct/updated index to each of the questions
     function update() {
         render(questionList(currentQuestions.map((q, i) => q(i)), addQuestion), element);
     }

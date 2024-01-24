@@ -1,20 +1,20 @@
-1. x Initialize project
-2. x Copy / api
-3. x Create Back4Up app
+1. [x] Initialize project
+2. [x] Copy / api
+3. [x] Create Back4Up app
 4. View documentation on Users
-5. x Adjust api.js to include AppID, APIKey, correct headers, register/login/logout routes and bodies
-6. x Test register/login/logout
+5. [x] Adjust api.js to include AppID, APIKey, correct headers, register/login/logout routes and bodies
+6. [x] Test register/login/logout
 7. Examine Database Browser, create Quiz collection
-8. x Create CRUD functions for Quiz collection
-9. x Test Quiz collection, confirm it is pubpic for read/write, NO Add field CLP
-10. View documentation on security, ACL, CLP
-11. x Configure public read, authenticated write, NO add field CLP
-12. x Test read/write
-13. x Configure owner pointer
-14. x Adjust data.js to include owner pointer on create -  { __type: 'Pointer', className: 'User'}
-15. x Test owner protection
-16. x Add query to include owner on GET
-17. x Create Question collection, configure CLP, owner pointer, Quiz pointer
-18. x Create CRUD functions for Question collection, with owner protection
-19. x Test Question collection
+8. [x] Create CRUD functions for Quiz collection
+9. [x] Test Quiz collection, confirm it is public for read/write, NO Add field CLP
+10. View documentation on security, ACL (Access Control List), CLP (Constraint Logic Programming)
+11. [x] Configure public read, authenticated write, NO add field CLP
+12. [x] Test read/write
+13. [x] Configure owner pointer
+14. [x] Adjust data.js to include owner pointer on create -  { __type: 'Pointer', className: 'User'}
+15. [x] Test owner protection
+16. [x] Add query to include owner on GET
+17. [x] Create Question collection, configure CLP, owner pointer, Quiz pointer
+18. [x] Create CRUD functions for Question collection, with owner protection
+19. [x] Test Question collection
 20. Proceed with implementation of views 

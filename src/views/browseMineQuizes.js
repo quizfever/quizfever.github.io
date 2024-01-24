@@ -17,7 +17,7 @@ const templateMyQuizes = (userId) => html`
             <input class="input submit action" type="submit" value="Filter Quizes">
         </form>
         */}
-        <h1>My quizes (I have created)</h1>
+        <h1>My quizzes (I have created)</h1>
     </header>
 
     ${until(loadMyQuizes(userId), cube())}

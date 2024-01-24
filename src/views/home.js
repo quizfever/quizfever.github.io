@@ -21,7 +21,7 @@ const homeTemplate = () => html`
 async function loadStats() {
     const stats = await getStats();
 
-    return html`<p>Home to ${stats} quizes in ${Object.keys(topics).length} topics. <a href="/browse">Browse all quizes</a>.</p>`;
+    return html`<p>Home to ${stats} quizes in ${Object.keys(topics).length} topics. <a href="/browse">Browse all quizzes</a>.</p>`;
 }
 
 async function loadRecent() {
@@ -32,10 +32,10 @@ async function loadRecent() {
         <h2>Our most recent quiz:</h2>
     
         ${recent ? quizTemplate(recent) : html`
-        <p>No quizes yet. Be the first to create one!</p>`}
+        <p>No quizzes yet. Be the first to create one!</p>`}
     
         <div>
-            <a class="action cta" href="/browse">Browse all quizes</a>
+            <a class="action cta" href="/browse">Browse all quizzes</a>
         </div>
     </div>`;
 }

@@ -76,11 +76,11 @@ export async function registerPage(ctx) {
         const password = formData.get('password');
         const repass = formData.get('repass');
 
-        if (username == '' || email == '' || password == '') {
+        if (username === '' || email === '' || password === '') {
             return alert('All fields are required!');
         }
 
-        if (password != repass) {
+        if (password !== repass) {
             return alert('Passwords do not match');
         }
 

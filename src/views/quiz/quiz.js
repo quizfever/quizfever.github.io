@@ -111,7 +111,7 @@ export async function quizPage(ctx) {
         }
 
         //TODO: maybe not needed
-        /* An option to keep the right an the wrong answers 
+        /* An option to keep the right and the wrong answers
         const result = [];
         for (let i = 0; i < questions.length; i++) {
             result.push({
@@ -122,7 +122,7 @@ export async function quizPage(ctx) {
 
         let correctAnswers = 0;
         for (let i = 0; i < questions.length; i++) {
-            if (questions[i].correctIndex == answers[i]) {//each question its correct answer is it equal to the current results/answers based on the filled in quiz by the user?
+            if (questions[i].correctIndex === answers[i]) {//each question its correct answer is it equal to the current results/answers based on the filled in quiz by the user
                 correctAnswers++;
             }         
         }

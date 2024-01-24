@@ -46,7 +46,7 @@ export function createAnswerListForOneQuestion(data, questionIndex) {
 
     function addAnswer(e) {
         e.preventDefault();
-        answers.push('');//добавя един елемент празен символ повече към масива = един radioEdit повече
+        answers.push(''); // adds one more element (an empty symbol) to the end of the array = 1 radioEdit more
         update();
     }
 

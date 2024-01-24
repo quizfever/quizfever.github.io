@@ -1,6 +1,6 @@
 import { html, until} from '../lib.js';
 import { getAllQuizes } from '../api/data.js';
-import { cube } from './common/loader';
+import { cube } from './common/loader.js';
 import { quizTemplate } from './common/quiz-preview.js';
 
 const templateAllQuizes = () => html`

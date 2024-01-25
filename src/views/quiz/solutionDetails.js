@@ -64,7 +64,7 @@ const previewAQuestionTemplate = (question, nextQuestionIndex) => {
         }
     } else {  //wrong answer by the user
         if (question.revealed == false) {
-            debugger;
+            // debugger;
             return html`
             <article class="preview">
                 <span class="s-incorrect">
